@@ -1,13 +1,10 @@
-name: 'Wait'
-description: 'Wait a designated number of milliseconds'
+name: 'Sync closed task references'
+description: 'Marks issues and PRs referenced from checkbox lists as completed'
 inputs:
-  milliseconds:  # id of input
-    description: 'number of milliseconds to wait'
-    required: true
-    default: '1000'
-outputs:
-  time: # output will be available to future steps 
-    description: 'The message to output'
+  github_token:
+    description: 'Token to use for authenticated GitHub API requests'
+    required: false
+    default: '${{ secrets.GITHUB_TOKEN }}'
 runs:
   using: 'node12'
   main: 'dist/index.js'
