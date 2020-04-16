@@ -21,7 +21,7 @@ async function run() {
 
     // create the regex to find references to mark complete
     const url = resource.html_url.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const regex = new RegExp(`^(\\s*)- \\[ \\](.*?(${url}|#${resource.number}).*?)$`, 'gm');
+    const regex = new RegExp(`^(\\s*)- \\[ \\](\\s+?.*?(${url}|#${resource.number}).*?)$`, 'gm');
 
     const token = core.getInput('github_token', { required: true });
     const api = octokit.graphql.defaults({
