@@ -1,0 +1,9 @@
+{
+  "node": {
+    "url": "https://github.com/jonabc/sync-task-issues/issues/123",
+    "number": 123,
+    "crossReferences": {
+      "nodes": []
+    }
+  }
+}
