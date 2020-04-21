@@ -8,7 +8,7 @@ on:
 
 jobs:
   # unit tests
-  units:
+  unit-tests:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v1
