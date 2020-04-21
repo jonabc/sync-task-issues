@@ -7,11 +7,11 @@ crossReferences: timelineItems(first: 100, itemTypes: [CROSS_REFERENCED_EVENT]) 
       source {
         ... on Issue {
           id
-          bodyText
+          body
         }
         ... on PullRequest {
           id
-          bodyText
+          body
         }
       }
     }
@@ -34,7 +34,7 @@ query($id: ID!) {
 
 const UPDATE_ISSUE_BODY = `
 mutation updateIssue($id: ID!, $body: String) {
-  addProjectCard(input: { id: $id, body: $body }) {
+  updateIssue(input: { id: $id, body: $body }) {
     issue {
       id
     }

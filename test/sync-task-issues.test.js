@@ -104,13 +104,13 @@ describe('sync-task-issues', () => {
         {
           source: {
             id: 'source-1',
-            bodyText: originalBody
+            body: originalBody
           }
         },
         {
           source: {
             id: 'source-2',
-            bodyText: originalBody
+            body: originalBody
           }
         }
       ];
@@ -195,13 +195,13 @@ describe('sync-task-issues', () => {
         {
           source: {
             id: 'source-1',
-            bodyText: originalBody
+            body: originalBody
           }
         },
         {
           source: {
             id: 'source-2',
-            bodyText: originalBody
+            body: originalBody
           }
         }
       ];

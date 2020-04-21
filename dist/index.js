@@ -396,11 +396,11 @@ crossReferences: timelineItems(first: 100, itemTypes: [CROSS_REFERENCED_EVENT]) 
       source {
         ... on Issue {
           id
-          bodyText
+          body
         }
         ... on PullRequest {
           id
-          bodyText
+          body
         }
       }
     }
@@ -423,7 +423,7 @@ query($id: ID!) {
 
 const UPDATE_ISSUE_BODY = `
 mutation updateIssue($id: ID!, $body: String) {
-  addProjectCard(input: { id: $id, body: $body }) {
+  updateIssue(input: { id: $id, body: $body }) {
     issue {
       id
     }
@@ -638,6 +638,7 @@ async function run() {
     // find all matching `- [ ] ...<url> or #<number>...` list items in each of
     // the cross referenced items and replace the [ ] with [x]
     const { node } = await api(queries.GET_CROSSREFERENCED_ITEMS, { id: resource.node_id });
+    core.info(`found ${node.crossReferences.nodes.length} references`);
     node.crossReferences.nodes.forEach(async ({ source: reference }) => {
       if (!reference.id) {
         // if the cross reference is to a non issue or PR, skip it
@@ -645,8 +646,9 @@ async function run() {
       }
 
       // if the body changes from checking boxes, push the changes back to GitHub
-      const updatedBody = reference.bodyText.replace(regex, '$1- [x]$2');
-      if (updatedBody !== reference.bodyText) {
+      const updatedBody = reference.body.replace(regex, '$1- [x]$2');
+      if (updatedBody !== reference.body) {
+        core.info(`updating ${reference.id}`);
         await api(queries.UPDATE_ISSUE_BODY, { id: reference.id, body: updatedBody });
       }
     });
