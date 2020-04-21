@@ -1,3 +1,3 @@
-const { run } = require('./sync-task-issues');
+const run = require('./sync-task-issues');
 
 run();

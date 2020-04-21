@@ -289,7 +289,7 @@ module.exports._enoent = enoent;
 /***/ 31:
 /***/ (function(__unusedmodule, __unusedexports, __webpack_require__) {
 
-const { run } = __webpack_require__(171);
+const run = __webpack_require__(171);
 
 run();
 

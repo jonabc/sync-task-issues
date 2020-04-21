@@ -1,6 +1,6 @@
 {
   "name": "sync-task-issues",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "Marks issues and PRs referenced from checkbox lists as completed",
   "main": "dist/index.js",
   "scripts": {
