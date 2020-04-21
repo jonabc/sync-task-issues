@@ -410,7 +410,7 @@ crossReferences: timelineItems(first: 100, itemTypes: [CROSS_REFERENCED_EVENT]) 
 
 const GET_CROSSREFERENCED_ITEMS = `
 query($id: ID!) {
-  node(id: id) {
+  node(id: $id) {
     ... on Issue {
       ${fields}
     }
