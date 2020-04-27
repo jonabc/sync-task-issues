@@ -25,5 +25,5 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Cross of any linked issues
-        uses: jonabc/sync-task-issues@master
+        uses: jonabc/sync-task-issues@v1
 ```
