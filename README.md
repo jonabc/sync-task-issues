@@ -7,7 +7,15 @@
 
 This GH Action finds checkbox list item cross-references to an issue or pull request from an event and marks the references as complete.
 
-This action uses the GitHub GraphQL API to find references, and updates each reference's body.  The action specifically looks for checkbox list items that are unchecked `- [ ] <any text>(url | #number)<any text>` and marks them complete -> `- [x]`.
+This action uses the GitHub GraphQL API to find references, and updates each reference's body.  The action looks for checkbox list items that are unchecked and marks them completed
+
+```markdown
+- [ ] <any text>(url | #number)<any text>
+
+becomes
+
+- [x] <any text>(url | #number)<any text>
+```
 
 
 ## Usage
@@ -27,3 +35,9 @@ jobs:
       - name: Cross of any linked issues
         uses: jonabc/sync-task-issues@v1
 ```
+
+## Required permissions
+
+The default ${{ secrets.GITHUB_TOKEN }} token can be used only when both the closed issues or PRs and their references are in the same repo.
+
+For cross-repo references, a personal access token with `repo` access is needed from a user account that can `write`to the all repositories containing references.
