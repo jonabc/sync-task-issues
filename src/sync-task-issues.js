@@ -19,9 +19,26 @@ async function run() {
       throw new Error('must run on an issue or pull request');
     }
 
+    const state = core.getInput('state');
+    let find;
+    let replace;
+    if (state === 'complete') {
+      // mark as complete if needed
+      [find, replace] = [' ', 'x'];
+    } else if (state === 'incomplete') {
+      // mark as incomplete if needed
+      [find, replace] = ['x', ' '];
+    } else if (context.payload.action === 'reopened') {
+      // auto + reopened action, mark as incomplete if needed
+      [find, replace] = ['x', ' '];
+    } else {
+      // auto + any other action, mark as complete if needed
+      [find, replace] = [' ', 'x'];
+    }
+
     // create the regex to find references to mark complete
     const url = resource.html_url.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const regex = new RegExp(`^(\\s*)- \\[ \\](\\s+?.*?(${url}|#${resource.number}).*?)$`, 'gm');
+    const regex = new RegExp(`^(\\s*)- \\[${find}\\](\\s+?.*?(${url}|#${resource.number}).*?)$`, 'gm');
 
     const token = core.getInput('github_token', { required: true });
     const api = octokit.graphql.defaults({
@@ -41,7 +58,7 @@ async function run() {
       }
 
       // if the body changes from checking boxes, push the changes back to GitHub
-      const updatedBody = reference.body.replace(regex, '$1- [x]$2');
+      const updatedBody = reference.body.replace(regex, `$1- [${replace}]$2`);
       if (updatedBody !== reference.body) {
         core.info(`updating ${reference.id}`);
         await api(queries.UPDATE_ISSUE_BODY, { id: reference.id, body: updatedBody });
