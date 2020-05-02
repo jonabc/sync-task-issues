@@ -104,12 +104,14 @@ describe('sync-task-issues', () => {
       response.node.crossReferences.nodes = [
         {
           source: {
+            __typename: 'Issue',
             id: 'source-1',
             body: originalBody
           }
         },
         {
           source: {
+            __typename: 'PullRequest',
             id: 'source-2',
             body: originalBody
           }
@@ -128,7 +130,7 @@ describe('sync-task-issues', () => {
         { id: response.node.crossReferences.nodes[0].source.id, body: expectedBody }
       ]);
       expect(api.getCall(2).args).toEqual([
-        queries.UPDATE_ISSUE_BODY,
+        queries.UPDATE_PULL_REQUEST_BODY,
         { id: response.node.crossReferences.nodes[1].source.id, body: expectedBody }
       ]);
 
@@ -162,12 +164,14 @@ describe('sync-task-issues', () => {
       response.node.crossReferences.nodes = [
         {
           source: {
+            __typename: 'Issue',
             id: 'source-1',
             body: originalBody
           }
         },
         {
           source: {
+            __typename: 'PullRequest',
             id: 'source-2',
             body: originalBody
           }
@@ -186,7 +190,7 @@ describe('sync-task-issues', () => {
         { id: response.node.crossReferences.nodes[0].source.id, body: expectedBody }
       ]);
       expect(api.getCall(2).args).toEqual([
-        queries.UPDATE_ISSUE_BODY,
+        queries.UPDATE_PULL_REQUEST_BODY,
         { id: response.node.crossReferences.nodes[1].source.id, body: expectedBody }
       ]);
 
@@ -222,12 +226,14 @@ describe('sync-task-issues', () => {
       response.node.crossReferences.nodes = [
         {
           source: {
+            __typename: 'Issue',
             id: 'source-1',
             body: originalBody
           }
         },
         {
           source: {
+            __typename: 'PullRequest',
             id: 'source-2',
             body: originalBody
           }
@@ -246,7 +252,7 @@ describe('sync-task-issues', () => {
         { id: response.node.crossReferences.nodes[0].source.id, body: expectedBody }
       ]);
       expect(api.getCall(2).args).toEqual([
-        queries.UPDATE_ISSUE_BODY,
+        queries.UPDATE_PULL_REQUEST_BODY,
         { id: response.node.crossReferences.nodes[1].source.id, body: expectedBody }
       ]);
 
@@ -281,12 +287,14 @@ describe('sync-task-issues', () => {
       response.node.crossReferences.nodes = [
         {
           source: {
+            __typename: 'Issue',
             id: 'source-1',
             body: originalBody
           }
         },
         {
           source: {
+            __typename: 'PullRequest',
             id: 'source-2',
             body: originalBody
           }
@@ -305,7 +313,7 @@ describe('sync-task-issues', () => {
         { id: response.node.crossReferences.nodes[0].source.id, body: expectedBody }
       ]);
       expect(api.getCall(2).args).toEqual([
-        queries.UPDATE_ISSUE_BODY,
+        queries.UPDATE_PULL_REQUEST_BODY,
         { id: response.node.crossReferences.nodes[1].source.id, body: expectedBody }
       ]);
 
@@ -372,12 +380,14 @@ describe('sync-task-issues', () => {
       response.node.crossReferences.nodes = [
         {
           source: {
+            __typename: 'Issue',
             id: 'source-1',
             body: originalBody
           }
         },
         {
           source: {
+            __typename: 'PullRequest',
             id: 'source-2',
             body: originalBody
           }
@@ -399,7 +409,7 @@ describe('sync-task-issues', () => {
         { id: response.node.crossReferences.nodes[0].source.id, body: expectedBody }
       ]);
       expect(api.getCall(2).args).toEqual([
-        queries.UPDATE_ISSUE_BODY,
+        queries.UPDATE_PULL_REQUEST_BODY,
         { id: response.node.crossReferences.nodes[1].source.id, body: expectedBody }
       ]);
 
@@ -433,12 +443,14 @@ describe('sync-task-issues', () => {
       response.node.crossReferences.nodes = [
         {
           source: {
+            __typename: 'Issue',
             id: 'source-1',
             body: originalBody
           }
         },
         {
           source: {
+            __typename: 'PullRequest',
             id: 'source-2',
             body: originalBody
           }
@@ -460,7 +472,7 @@ describe('sync-task-issues', () => {
         { id: response.node.crossReferences.nodes[0].source.id, body: expectedBody }
       ]);
       expect(api.getCall(2).args).toEqual([
-        queries.UPDATE_ISSUE_BODY,
+        queries.UPDATE_PULL_REQUEST_BODY,
         { id: response.node.crossReferences.nodes[1].source.id, body: expectedBody }
       ]);
 
@@ -496,12 +508,14 @@ describe('sync-task-issues', () => {
       response.node.crossReferences.nodes = [
         {
           source: {
+            __typename: 'Issue',
             id: 'source-1',
             body: originalBody
           }
         },
         {
           source: {
+            __typename: 'PullRequest',
             id: 'source-2',
             body: originalBody
           }
@@ -523,7 +537,7 @@ describe('sync-task-issues', () => {
         { id: response.node.crossReferences.nodes[0].source.id, body: expectedBody }
       ]);
       expect(api.getCall(2).args).toEqual([
-        queries.UPDATE_ISSUE_BODY,
+        queries.UPDATE_PULL_REQUEST_BODY,
         { id: response.node.crossReferences.nodes[1].source.id, body: expectedBody }
       ]);
 
@@ -558,12 +572,14 @@ describe('sync-task-issues', () => {
       response.node.crossReferences.nodes = [
         {
           source: {
+            __typename: 'Issue',
             id: 'source-1',
             body: originalBody
           }
         },
         {
           source: {
+            __typename: 'PullRequest',
             id: 'source-2',
             body: originalBody
           }
@@ -585,7 +601,7 @@ describe('sync-task-issues', () => {
         { id: response.node.crossReferences.nodes[0].source.id, body: expectedBody }
       ]);
       expect(api.getCall(2).args).toEqual([
-        queries.UPDATE_ISSUE_BODY,
+        queries.UPDATE_PULL_REQUEST_BODY,
         { id: response.node.crossReferences.nodes[1].source.id, body: expectedBody }
       ]);
 

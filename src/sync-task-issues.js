@@ -60,8 +60,12 @@ async function run() {
       // if the body changes from checking boxes, push the changes back to GitHub
       const updatedBody = reference.body.replace(regex, `$1- [${replace}]$2`);
       if (updatedBody !== reference.body) {
-        core.info(`updating ${reference.id}`);
-        await api(queries.UPDATE_ISSUE_BODY, { id: reference.id, body: updatedBody });
+        core.info(`updating ${reference.__typename} ${reference.id}`);
+        if (reference.__typename === 'Issue') {
+          await api(queries.UPDATE_ISSUE_BODY, { id: reference.id, body: updatedBody });
+        } else if (reference.__typename === 'PullRequest') {
+          await api(queries.UPDATE_PULL_REQUEST_BODY, { id: reference.id, body: updatedBody });
+        }
       }
     });
   } catch (error) {

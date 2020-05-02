@@ -5,6 +5,7 @@ crossReferences: timelineItems(first: 100, itemTypes: [CROSS_REFERENCED_EVENT]) 
   nodes {
     ... on CrossReferencedEvent {
       source {
+        __typename
         ... on Issue {
           id
           body
@@ -42,7 +43,18 @@ mutation updateIssue($id: ID!, $body: String) {
 }
 `.trim();
 
+const UPDATE_PULL_REQUEST_BODY = `
+mutation updatePullRequest($id: ID!, $body: String) {
+  updatePullRequest(input: { pullRequestId: $id, body: $body }) {
+    pullRequest {
+      id
+    }
+  }
+}
+`.trim();
+
 module.exports = {
   GET_CROSSREFERENCED_ITEMS,
-  UPDATE_ISSUE_BODY
+  UPDATE_ISSUE_BODY,
+  UPDATE_PULL_REQUEST_BODY
 };

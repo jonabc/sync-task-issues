@@ -394,6 +394,7 @@ crossReferences: timelineItems(first: 100, itemTypes: [CROSS_REFERENCED_EVENT]) 
   nodes {
     ... on CrossReferencedEvent {
       source {
+        __typename
         ... on Issue {
           id
           body
@@ -431,9 +432,20 @@ mutation updateIssue($id: ID!, $body: String) {
 }
 `.trim();
 
+const UPDATE_PULL_REQUEST_BODY = `
+mutation updatePullRequest($id: ID!, $body: String) {
+  updatePullRequest(input: { pullRequestId: $id, body: $body }) {
+    pullRequest {
+      id
+    }
+  }
+}
+`.trim();
+
 module.exports = {
   GET_CROSSREFERENCED_ITEMS,
-  UPDATE_ISSUE_BODY
+  UPDATE_ISSUE_BODY,
+  UPDATE_PULL_REQUEST_BODY
 };
 
 
@@ -665,8 +677,12 @@ async function run() {
       // if the body changes from checking boxes, push the changes back to GitHub
       const updatedBody = reference.body.replace(regex, `$1- [${replace}]$2`);
       if (updatedBody !== reference.body) {
-        core.info(`updating ${reference.id}`);
-        await api(queries.UPDATE_ISSUE_BODY, { id: reference.id, body: updatedBody });
+        core.info(`updating ${reference.__typename} ${reference.id}`);
+        if (reference.__typename === 'Issue') {
+          await api(queries.UPDATE_ISSUE_BODY, { id: reference.id, body: updatedBody });
+        } else if (reference.__typename === 'PullRequest') {
+          await api(queries.UPDATE_PULL_REQUEST_BODY, { id: reference.id, body: updatedBody });
+        }
       }
     });
   } catch (error) {
