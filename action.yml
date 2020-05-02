@@ -5,6 +5,9 @@ inputs:
     description: 'Token to use for authenticated GitHub API requests'
     required: false
     default: ${{ github.token }}
+  state:
+    description: '(Optional) An explicit state to mark references - complete or incomplete'
+    required: false
 runs:
   using: 'node12'
   main: 'dist/index.js'
