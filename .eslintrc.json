@@ -16,7 +16,8 @@
         "singleQuote": true,
         "printWidth": 120
       }
-    ]
+    ],
+    "no-underscore-dangle": ["error", { "allow": ["__typename"] }]
   },
   "plugins": [
     "prettier"
