@@ -34,14 +34,20 @@ Create a YAML file in the `.github/workflows` folder of your repository with the
 ```yml
 name: Cross off linked issues
 on:
+  # the closed event type causes unchecked checkbox references to be checked / marked complete
+  # the reopened event type causes checked checkbox references to be unchecked / marked incomplete
   issues:
-    types: [closed]
+    types: [closed, reopened]
+
+  # the action works on pull request events as well
+  pull_requests:
+    types: [closed, reopened]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Cross of any linked issues
+      - name: Cross of any linked issue and PR references
         uses: jonabc/sync-task-issues@v1
 ```
 
