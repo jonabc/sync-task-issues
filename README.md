@@ -40,14 +40,14 @@ on:
     types: [closed, reopened]
 
   # the action works on pull request events as well
-  pull_requests:
+  pull_request:
     types: [closed, reopened]
 
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Cross of any linked issue and PR references
+      - name: Cross off any linked issue and PR references
         uses: jonabc/sync-task-issues@v1
 ```
 
