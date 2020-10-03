@@ -19,26 +19,20 @@ async function run() {
       throw new Error('must run on an issue or pull request');
     }
 
-    const state = core.getInput('state');
-    let find;
-    let replace;
-    if (state === 'complete') {
-      // mark as complete if needed
-      [find, replace] = [' ', 'x'];
-    } else if (state === 'incomplete') {
-      // mark as incomplete if needed
-      [find, replace] = ['x', ' '];
-    } else if (context.payload.action === 'reopened') {
-      // auto + reopened action, mark as incomplete if needed
-      [find, replace] = ['x', ' '];
-    } else {
-      // auto + any other action, mark as complete if needed
-      [find, replace] = [' ', 'x'];
+    let state = core.getInput('state');
+    if (!['complete', 'incomplete'].includes(state)) {
+      state = context.payload.action === 'reopened' ? 'incomplete' : 'complete';
     }
 
-    // create the regex to find references to mark complete
+    core.setOutput('mark_references_as', state);
+
+    // determine whether to mark items as checked or not and craft
+    // search and replacement values to use in String.replace
+    const find = state === 'complete' ? ' ' : 'x';
+    const replace = state === 'complete' ? 'x' : ' ';
     const url = resource.html_url.replace(/[-/\\^$*+?.()|[\]{}]/g, '\\$&');
-    const regex = new RegExp(`^(\\s*)- \\[${find}\\](\\s+?.*?(${url}|#${resource.number}).*?)$`, 'gm');
+    const findRegex = new RegExp(`^(\\s*)- \\[${find}\\](\\s+?.*?(${url}|#${resource.number}).*?)$`, 'gm');
+    const replaceString = `$1- [${replace}]$2`;
 
     const token = core.getInput('github_token', { required: true });
     const api = octokit.graphql.defaults({
@@ -50,24 +44,34 @@ async function run() {
     // find all matching `- [ ] ...<url> or #<number>...` list items in each of
     // the cross referenced items and replace the [ ] with [x]
     const { node } = await api(queries.GET_CROSSREFERENCED_ITEMS, { id: resource.node_id });
-    core.info(`found ${node.crossReferences.nodes.length} references`);
-    node.crossReferences.nodes.forEach(async ({ source: reference }) => {
+    const references = node.crossReferences.nodes;
+    core.info(`found ${references.length} references`);
+
+    const updated = [];
+    for (let i = 0; i < references.length; i += 1) {
+      const { source: reference } = references[i];
       if (!reference.id) {
         // if the cross reference is to a non issue or PR, skip it
         return;
       }
 
       // if the body changes from checking boxes, push the changes back to GitHub
-      const updatedBody = reference.body.replace(regex, `$1- [${replace}]$2`);
+      const updatedBody = reference.body.replace(findRegex, replaceString);
       if (updatedBody !== reference.body) {
         core.info(`updating ${reference.__typename} ${reference.id}`);
         if (reference.__typename === 'Issue') {
+          // eslint-disable-next-line no-await-in-loop
           await api(queries.UPDATE_ISSUE_BODY, { id: reference.id, body: updatedBody });
         } else if (reference.__typename === 'PullRequest') {
+          // eslint-disable-next-line no-await-in-loop
           await api(queries.UPDATE_PULL_REQUEST_BODY, { id: reference.id, body: updatedBody });
         }
+        updated.push(`${reference.__typename}:${reference.id}`);
       }
-    });
+    }
+
+    core.setOutput('references', JSON.stringify(references));
+    core.setOutput('updated', JSON.stringify(updated));
   } catch (error) {
     core.setFailed(error.message);
   }

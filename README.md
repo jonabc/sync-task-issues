@@ -51,12 +51,22 @@ jobs:
         uses: jonabc/sync-task-issues@v1
 ```
 
-### State input
-
-A `state` input is available to explicitly configure whether to mark references as complete or incomplete when the action is triggered.  Available values are `complete` and `incomplete`.
-
 ## Required permissions
 
 The default ${{ secrets.GITHUB_TOKEN }} token can be used only when both the closed issues or PRs and their references are in the same repo.
 
 For cross-repo references, a personal access token with `repo` access is needed from a user account that can `write` to the all repositories containing references.
+
+### Inputs
+
+- `state`: explicitly configure whether to mark references as complete or incomplete when the action is triggered
+   - accepts either `complete` and `incomplete`
+
+### Outputs
+
+- `mark_references_as`: Either `complete` or `incomplete`, showing how references were marked by the action
+- `references`: The list of objects obtained from the GitHub API that referenced the current issue or PR
+   - output using `JSON.stringify`, ex. `[{ ... reference 1 }, { ... reference 2 }]`
+   - see [graphql.js#fields](./src/graphql.js) for which data fields are fetched from the API
+- `updated`: A list of `${type}:${id}` strings that identify which objects from `references` were updated
+   - output using `JSON.stringify`, ex. `["Issue:1", "PullRequest:2"]`
