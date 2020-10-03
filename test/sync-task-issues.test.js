@@ -23,6 +23,7 @@ describe('sync-task-issues', () => {
 
     sinon.stub(core, 'setFailed');
     sinon.stub(core, 'info');
+    sinon.stub(core, 'setOutput');
 
     // eslint-disable-next-line global-require
     response = JSON.parse(
@@ -135,6 +136,19 @@ describe('sync-task-issues', () => {
       ]);
 
       expect(core.setFailed.callCount).toEqual(0);
+
+      expect(core.setOutput.callCount).toEqual(3);
+      expect(core.setOutput.getCall(0).args).toEqual(['mark_references_as', 'complete']);
+      expect(core.setOutput.getCall(1).args).toEqual([
+        'references',
+        JSON.stringify(response.node.crossReferences.nodes)
+      ]);
+      expect(core.setOutput.getCall(2).args).toEqual([
+        'updated',
+        JSON.stringify(
+          response.node.crossReferences.nodes.map(({ source: { __typename, id } }) => `${__typename}:${id}`)
+        )
+      ]);
     });
 
     it('marks matching complete checkbox list references as incomplete for reopened event', async () => {
@@ -195,6 +209,19 @@ describe('sync-task-issues', () => {
       ]);
 
       expect(core.setFailed.callCount).toEqual(0);
+
+      expect(core.setOutput.callCount).toEqual(3);
+      expect(core.setOutput.getCall(0).args).toEqual(['mark_references_as', 'incomplete']);
+      expect(core.setOutput.getCall(1).args).toEqual([
+        'references',
+        JSON.stringify(response.node.crossReferences.nodes)
+      ]);
+      expect(core.setOutput.getCall(2).args).toEqual([
+        'updated',
+        JSON.stringify(
+          response.node.crossReferences.nodes.map(({ source: { __typename, id } }) => `${__typename}:${id}`)
+        )
+      ]);
     });
 
     it('marks matching incomplete checkbox list references as complete for complete state input', async () => {
@@ -414,6 +441,19 @@ describe('sync-task-issues', () => {
       ]);
 
       expect(core.setFailed.callCount).toEqual(0);
+
+      expect(core.setOutput.callCount).toEqual(3);
+      expect(core.setOutput.getCall(0).args).toEqual(['mark_references_as', 'complete']);
+      expect(core.setOutput.getCall(1).args).toEqual([
+        'references',
+        JSON.stringify(response.node.crossReferences.nodes)
+      ]);
+      expect(core.setOutput.getCall(2).args).toEqual([
+        'updated',
+        JSON.stringify(
+          response.node.crossReferences.nodes.map(({ source: { __typename, id } }) => `${__typename}:${id}`)
+        )
+      ]);
     });
 
     it('marks matching complete checkbox list references as incomplete for reopened event', async () => {
@@ -477,6 +517,19 @@ describe('sync-task-issues', () => {
       ]);
 
       expect(core.setFailed.callCount).toEqual(0);
+
+      expect(core.setOutput.callCount).toEqual(3);
+      expect(core.setOutput.getCall(0).args).toEqual(['mark_references_as', 'incomplete']);
+      expect(core.setOutput.getCall(1).args).toEqual([
+        'references',
+        JSON.stringify(response.node.crossReferences.nodes)
+      ]);
+      expect(core.setOutput.getCall(2).args).toEqual([
+        'updated',
+        JSON.stringify(
+          response.node.crossReferences.nodes.map(({ source: { __typename, id } }) => `${__typename}:${id}`)
+        )
+      ]);
     });
 
     it('marks matching incomplete checkbox list references as complete for complete state input', async () => {

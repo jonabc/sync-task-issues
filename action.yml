@@ -8,6 +8,13 @@ inputs:
   state:
     description: '(Optional) An explicit state to mark references - complete or incomplete'
     required: false
+outputs:
+  mark_references_as:
+    description: Either `complete` or `incomplete`, showing how references were marked by the action
+  references:
+    description: The list of objects obtained from the GitHub API that referenced the current issue or PR
+  updated:
+    description: A list of `${type}:${id}` strings that identify which objects from "references" were updated
 runs:
   using: 'node12'
   main: 'dist/index.js'
