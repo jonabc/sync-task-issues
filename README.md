@@ -61,6 +61,7 @@ For cross-repo references, a personal access token with `repo` access is needed 
 
 ### Inputs
 
+- `github_token`: the token to use for authenticated GitHub API requests
 - `state`: explicitly configure whether to mark references as complete or incomplete when the action is triggered
    - accepts either `complete` and `incomplete`
 
