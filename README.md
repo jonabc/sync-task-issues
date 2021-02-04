@@ -49,6 +49,8 @@ jobs:
     steps:
       - name: Cross off any linked issue and PR references
         uses: jonabc/sync-task-issues@v1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
 ```
 
 ## Required permissions
