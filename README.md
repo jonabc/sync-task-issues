@@ -1,3 +1,6 @@
+### [DEPRECATED]
+
+GitHub's native markdown task lists were updated since this action was originally created to perform the same behaviors.  This action has been deprecated and will not receive any future changes.
 
 <p align="center">
   <a href="https://github.com/jonabc/sync-task-issues"><img alt="javscript-action status" src="https://github.com/jonabc/sync-task-issues/workflows/units-test/badge.svg"></a>
